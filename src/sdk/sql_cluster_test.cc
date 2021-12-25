@@ -363,32 +363,26 @@ static std::shared_ptr<SQLRouter> GetNewSQLRouter() {
     return NewClusterSQLRouter(sql_opt);
 }
 static bool IsRequestSupportMode(const std::string& mode) {
-    if (mode.find("hybridse-only") != std::string::npos ||
-        mode.find("rtidb-unsupport") != std::string::npos ||
+    if (mode.find("hybridse-only") != std::string::npos || mode.find("rtidb-unsupport") != std::string::npos ||
         mode.find("performance-sensitive-unsupport") != std::string::npos ||
-        mode.find("request-unsupport") != std::string::npos
-        || mode.find("cluster-unsupport") != std::string::npos) {
+        mode.find("request-unsupport") != std::string::npos || mode.find("cluster-unsupport") != std::string::npos) {
         return false;
     }
     return true;
 }
 static bool IsBatchRequestSupportMode(const std::string& mode) {
-    if (mode.find("hybridse-only") != std::string::npos ||
-        mode.find("rtidb-unsupport") != std::string::npos ||
+    if (mode.find("hybridse-only") != std::string::npos || mode.find("rtidb-unsupport") != std::string::npos ||
         mode.find("performance-sensitive-unsupport") != std::string::npos ||
         mode.find("batch-request-unsupport") != std::string::npos ||
-        mode.find("request-unsupport") != std::string::npos
-        || mode.find("cluster-unsupport") != std::string::npos) {
+        mode.find("request-unsupport") != std::string::npos || mode.find("cluster-unsupport") != std::string::npos) {
         return false;
     }
     return true;
 }
 static bool IsBatchSupportMode(const std::string& mode) {
-    if (mode.find("hybridse-only") != std::string::npos ||
-        mode.find("rtidb-unsupport") != std::string::npos ||
+    if (mode.find("hybridse-only") != std::string::npos || mode.find("rtidb-unsupport") != std::string::npos ||
         mode.find("performance-sensitive-unsupport") != std::string::npos ||
-        mode.find("batch-unsupport") != std::string::npos
-        || mode.find("cluster-unsupport") != std::string::npos) {
+        mode.find("batch-unsupport") != std::string::npos || mode.find("cluster-unsupport") != std::string::npos) {
         return false;
     }
     return true;

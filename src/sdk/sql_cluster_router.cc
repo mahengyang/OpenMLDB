@@ -1068,9 +1068,8 @@ std::shared_ptr<ExplainInfo> SQLClusterRouter::Explain(const std::string& db, co
     ::hybridse::vm::ExplainOutput explain_output;
     ::hybridse::base::Status vm_status;
     ::hybridse::codec::Schema parameter_schema;
-    bool ok =
-        cluster_sdk_->GetEngine()->Explain(sql, db, ::hybridse::vm::kRequestMode, parameter_schema, &explain_output,
-                                           &vm_status);
+    bool ok = cluster_sdk_->GetEngine()->Explain(sql, db, ::hybridse::vm::kRequestMode, parameter_schema,
+                                                 &explain_output, &vm_status);
     if (!ok) {
         status->code = -1;
         status->msg = vm_status.msg;

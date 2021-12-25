@@ -18,11 +18,11 @@
 #define SRC_CLIENT_NEARLINE_TABLET_CLIENT_H_
 
 #include <string>
+
 #include "base/status.h"
 #include "client/client.h"
 #include "proto/nl_tablet.pb.h"
 #include "rpc/rpc_client.h"
-
 
 namespace openmldb {
 
@@ -34,16 +34,14 @@ class NearLineTabletClient : public Client {
  public:
     NearLineTabletClient(const std::string& endpoint, const std::string& real_endpoint, bool use_sleep_policy)
         : Client(endpoint, real_endpoint),
-        client_(real_endpoint.empty() ? endpoint : real_endpoint, use_sleep_policy) {}
+          client_(real_endpoint.empty() ? endpoint : real_endpoint, use_sleep_policy) {}
 
     ~NearLineTabletClient() {}
 
-    int Init() override {
-        return client_.Init();
-    }
+    int Init() override { return client_.Init(); }
 
     ::openmldb::base::Status CreateTable(const std::string& db_name, const std::string& table_name,
-            const std::string& partition_key, const Schema& schema);
+                                         const std::string& partition_key, const Schema& schema);
 
  private:
     ::openmldb::RpcClient<::openmldb::nltablet::NLTabletServer_Stub> client_;
