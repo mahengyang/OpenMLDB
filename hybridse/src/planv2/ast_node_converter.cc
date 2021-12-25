@@ -572,7 +572,8 @@ base::Status ConvertStatement(const zetasql::ASTStatement* statement, node::Node
             const zetasql::ASTShowStatement* show_statement = statement->GetAsOrNull<zetasql::ASTShowStatement>();
             CHECK_TRUE(nullptr != show_statement->identifier(), common::kSqlAstError, "not an ASTShowStatement")
             auto show_id = show_statement->identifier()->GetAsStringView();
-            CHECK_TRUE(nullptr == show_statement->optional_like_string(), common::kSqlAstError, "Non-support LIKE in "
+            CHECK_TRUE(nullptr == show_statement->optional_like_string(), common::kSqlAstError,
+                       "Non-support LIKE in "
                        "show statement")
 
             if (absl::EqualsIgnoreCase(show_id, "DATABASES")) {
@@ -684,7 +685,8 @@ base::Status ConvertStatement(const zetasql::ASTStatement* statement, node::Node
             /// support system variable setting and showing in OpenMLDB since v0.4.0
             /// non-support local variable setting in v0.4.0
             const auto ast_system_variable_assign = statement->GetAsOrNull<zetasql::ASTSystemVariableAssignment>();
-            CHECK_TRUE(nullptr != ast_system_variable_assign, common::kSqlAstError, "not an "
+            CHECK_TRUE(nullptr != ast_system_variable_assign, common::kSqlAstError,
+                       "not an "
                        "ASTSystemVariableAssignment");
             std::vector<std::string> path;
             CHECK_STATUS(AstPathExpressionToStringList(ast_system_variable_assign->system_variable()->path(), path));
@@ -696,8 +698,8 @@ base::Status ConvertStatement(const zetasql::ASTStatement* statement, node::Node
                        "Unsupported Set value other than const type");
             // System variable is session variable by default
             if (path.size() == 1) {
-                *output = node_manager->MakeSetNode(node::VariableScope::kSessionSystemVariable,
-                                                    path[0], dynamic_cast<node::ConstNode*>(value));
+                *output = node_manager->MakeSetNode(node::VariableScope::kSessionSystemVariable, path[0],
+                                                    dynamic_cast<node::ConstNode*>(value));
             } else if (path.size() == 2) {
                 boost::to_lower(path[0]);
                 if (path[0] == "global") {
@@ -742,8 +744,7 @@ base::Status ConvertStatement(const zetasql::ASTStatement* statement, node::Node
                 CHECK_STATUS(ConvertAstOptionsListToMap(load_data_stmt->opt_config()->options_list(), node_manager,
                                                         config_options));
             }
-            *output =
-                node_manager->MakeLoadDataNode(file_name, db, table, options, config_options);
+            *output = node_manager->MakeLoadDataNode(file_name, db, table, options, config_options);
             break;
         }
         case zetasql::AST_DEPLOY_STATEMENT: {
@@ -1964,7 +1965,7 @@ base::Status ConvertAstOptionsListToMap(const zetasql::ASTOptionsList* options, 
     return base::Status::OK();
 }
 
-base::Status ConvertTargetName(const zetasql::ASTTargetName* node, std::vector<absl::string_view>& output) { // NOLINT
+base::Status ConvertTargetName(const zetasql::ASTTargetName* node, std::vector<absl::string_view>& output) {  // NOLINT
     CHECK_TRUE(node != nullptr && node->target() != nullptr, common::kSqlAstError, "not an ASTTargetName");
     auto names = node->target();
     if (names->node_kind() == zetasql::AST_PATH_EXPRESSION) {

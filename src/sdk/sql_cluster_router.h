@@ -24,9 +24,9 @@
 #include <utility>
 #include <vector>
 
+#include "base/lru_cache.h"
 #include "base/random.h"
 #include "base/spinlock.h"
-#include "base/lru_cache.h"
 #include "client/tablet_client.h"
 #include "sdk/db_sdk.h"
 #include "sdk/sql_router.h"

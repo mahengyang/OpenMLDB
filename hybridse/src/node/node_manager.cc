@@ -51,7 +51,7 @@ QueryNode *NodeManager::MakeUnionQueryNode(QueryNode *left, QueryNode *right, bo
 TableRefNode *NodeManager::MakeTableNode(const std::string &name, const std::string &alias) {
     return MakeTableNode("", name, alias);
 }
-TableRefNode *NodeManager::MakeTableNode(const std::string& db, const std::string &name, const std::string &alias) {
+TableRefNode *NodeManager::MakeTableNode(const std::string &db, const std::string &name, const std::string &alias) {
     TableRefNode *node_ptr = new TableNode(db, name, alias);
     RegisterNode(node_ptr);
     return node_ptr;
@@ -582,7 +582,7 @@ PlanNode *NodeManager::MakeMultiPlanNode(const PlanType &type) {
     return node_ptr;
 }
 
-PlanNode *NodeManager::MakeTablePlanNode(const std::string& db, const std::string &table_name) {
+PlanNode *NodeManager::MakeTablePlanNode(const std::string &db, const std::string &table_name) {
     PlanNode *node_ptr = new TablePlanNode(db, table_name);
     return RegisterNode(node_ptr);
 }
@@ -744,28 +744,27 @@ SqlNode *NodeManager::MakeCreateIndexNode(const std::string &index_name, const s
     return RegisterNode(node_ptr);
 }
 
-DeployNode *NodeManager::MakeDeployStmt(const std::string &name, const SqlNode *stmt,
-                                     const std::string& stmt_str, bool if_not_exist) {
+DeployNode *NodeManager::MakeDeployStmt(const std::string &name, const SqlNode *stmt, const std::string &stmt_str,
+                                        bool if_not_exist) {
     DeployNode *node = new DeployNode(name, stmt, stmt_str, if_not_exist);
     return RegisterNode(node);
 }
 
 DeployPlanNode *NodeManager::MakeDeployPlanNode(const std::string &name, const SqlNode *stmt,
-                                                const std::string& stmt_str, bool if_not_exist) {
+                                                const std::string &stmt_str, bool if_not_exist) {
     DeployPlanNode *node = new DeployPlanNode(name, stmt, stmt_str, if_not_exist);
     return RegisterNode(node);
 }
-DeleteNode* NodeManager::MakeDeleteNode(DeleteTarget target, std::string_view job_id) {
+DeleteNode *NodeManager::MakeDeleteNode(DeleteTarget target, std::string_view job_id) {
     auto node = new DeleteNode(target, std::string(job_id.data(), job_id.size()));
     return RegisterNode(node);
 }
-DeletePlanNode* NodeManager::MakeDeletePlanNode(const DeleteNode* n) {
+DeletePlanNode *NodeManager::MakeDeletePlanNode(const DeleteNode *n) {
     auto node = new DeletePlanNode(n->GetTarget(), n->GetJobId());
     return RegisterNode(node);
 }
 LoadDataNode *NodeManager::MakeLoadDataNode(const std::string &file_name, const std::string &db,
-                                            const std::string &table,
-                                            const std::shared_ptr<OptionsMap> options,
+                                            const std::string &table, const std::shared_ptr<OptionsMap> options,
                                             const std::shared_ptr<OptionsMap> config_option) {
     LoadDataNode *node = new LoadDataNode(file_name, db, table, std::move(options), std::move(config_option));
     return RegisterNode(node);
@@ -780,7 +779,7 @@ LoadDataPlanNode *NodeManager::MakeLoadDataPlanNode(const std::string &file_name
 SelectIntoNode *NodeManager::MakeSelectIntoNode(const QueryNode *query, const std::string &query_str,
                                                 const std::string &out_file, const std::shared_ptr<OptionsMap> options,
                                                 const std::shared_ptr<OptionsMap> config_option) {
-    SelectIntoNode* node = new SelectIntoNode(query, query_str, out_file, std::move(options), std::move(config_option));
+    SelectIntoNode *node = new SelectIntoNode(query, query_str, out_file, std::move(options), std::move(config_option));
     return RegisterNode(node);
 }
 
@@ -788,17 +787,16 @@ SelectIntoPlanNode *NodeManager::MakeSelectIntoPlanNode(const QueryNode *query, 
                                                         const std::string &out_file,
                                                         const std::shared_ptr<OptionsMap> options,
                                                         const std::shared_ptr<OptionsMap> config_option) {
-    SelectIntoPlanNode* node = new SelectIntoPlanNode(query, query_str, out_file, options, config_option);
+    SelectIntoPlanNode *node = new SelectIntoPlanNode(query, query_str, out_file, options, config_option);
     return RegisterNode(node);
 }
 
-SetNode* NodeManager::MakeSetNode(const node::VariableScope scope, const std::string &key, const
-                                                      ConstNode *value) {
-    SetNode* node = new SetNode(scope, key, value);
+SetNode *NodeManager::MakeSetNode(const node::VariableScope scope, const std::string &key, const ConstNode *value) {
+    SetNode *node = new SetNode(scope, key, value);
     return RegisterNode(node);
 }
-SetPlanNode* NodeManager::MakeSetPlanNode(const SetNode *set_node) {
-    SetPlanNode* node = new SetPlanNode(set_node->Scope(), set_node->Key(), set_node->Value());
+SetPlanNode *NodeManager::MakeSetPlanNode(const SetNode *set_node) {
+    SetPlanNode *node = new SetPlanNode(set_node->Scope(), set_node->Key(), set_node->Value());
     return RegisterNode(node);
 }
 
@@ -979,12 +977,12 @@ BetweenExpr *NodeManager::MakeBetweenExpr(ExprNode *expr, ExprNode *left, ExprNo
     node->set_is_not_between(is_not);
     return RegisterNode(node);
 }
-InExpr *NodeManager::MakeInExpr(ExprNode* lhs, ExprNode* in_list, bool is_not) {
-    InExpr* in_expr = new InExpr(lhs, in_list, is_not);
+InExpr *NodeManager::MakeInExpr(ExprNode *lhs, ExprNode *in_list, bool is_not) {
+    InExpr *in_expr = new InExpr(lhs, in_list, is_not);
     return RegisterNode(in_expr);
 }
-EscapedExpr *NodeManager::MakeEscapeExpr(ExprNode* pattern, ExprNode* escape) {
-    EscapedExpr* escape_expr = new EscapedExpr(pattern, escape);
+EscapedExpr *NodeManager::MakeEscapeExpr(ExprNode *pattern, ExprNode *escape) {
+    EscapedExpr *escape_expr = new EscapedExpr(pattern, escape);
     return RegisterNode(escape_expr);
 }
 ExprNode *NodeManager::MakeAndExpr(ExprListNode *expr_list) {

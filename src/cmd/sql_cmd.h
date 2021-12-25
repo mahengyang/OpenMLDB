@@ -402,7 +402,7 @@ void PrintJobInfos(std::ostream& stream, std::vector<::openmldb::taskmanager::Jo
     t.end_of_row();
 
     for (auto& job_info : job_infos) {
-        //request.add_endpoint_group(endpoint);
+        // request.add_endpoint_group(endpoint);
         t.add(std::to_string(job_info.id()));
         t.add(job_info.job_type());
         t.add(job_info.state());
@@ -882,8 +882,9 @@ base::Status HandleDeploy(const hybridse::node::DeployPlanNode* deploy_node) {
                 record_cnt += it->second.table_partition(idx).record_cnt();
             }
             if (record_cnt > 0) {
-                return {base::ReturnCode::kError, "table " + kv.first +
-                    " has online data, cannot deploy. please drop this table and create a new one"};
+                return {base::ReturnCode::kError,
+                        "table " + kv.first +
+                            " has online data, cannot deploy. please drop this table and create a new one"};
             }
             new_index_map.emplace(kv.first, std::move(new_indexs));
         }

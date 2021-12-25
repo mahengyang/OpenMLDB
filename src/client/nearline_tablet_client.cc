@@ -21,7 +21,7 @@ namespace openmldb {
 namespace client {
 
 ::openmldb::base::Status NearLineTabletClient::CreateTable(const std::string& db_name, const std::string& table_name,
-        const std::string& partition_key, const Schema& schema) {
+                                                           const std::string& partition_key, const Schema& schema) {
     if (db_name.empty()) {
         return ::openmldb::base::Status(-1, "db name is empty");
     }
